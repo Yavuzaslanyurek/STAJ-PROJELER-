@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staj Projesi 9 - Metin Analiz Aracı</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 100%; max-width: 500px; }
+        h2 { margin-top: 0; color: #38bdf8; text-align: center; font-size: 20px; margin-bottom: 20px; }
+        
+        textarea { width: 100%; height: 160px; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 15px; outline: none; resize: vertical; line-height: 1.5; }
+        textarea:focus { border-color: #38bdf8; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+        .stat-card { background: #0f172a; border: 1px solid #334155; padding: 12px; border-radius: 8px; text-align: center; }
+        .stat-value { font-size: 22px; font-weight: bold; color: #38bdf8; margin-top: 4px; }
+        .stat-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .reading-time { text-align: center; margin-top: 15px; font-size: 13px; color: #10b981; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Metin Analiz Aracı</h2>
+        
+        <textarea id="textInput" placeholder="Analiz edilecek metni buraya yazın veya yapıştırın..." oninput="analyzeText()"></textarea>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Kelime Sayısı</div>
+                <div class="stat-value" id="wordCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Karakter (Boşluklu)</div>
+                <div class="stat-value" id="charCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Karakter (Boşluksuz)</div>
+                <div class="stat-value" id="noSpaceCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Cümle Sayısı</div>
+                <div class="stat-value" id="sentenceCount">0</div>
+            </div>
+        </div>
+
+        <div class="reading-time" id="readingTime">⏱️ Tahmini Okuma Süresi: 0 dk</div>
+    </div>
+
+    <script>
+        function analyzeText() {
+            const text = document.getElementById('textInput').value;
+
+            // Karakter Sayıları
+            const charCount = text.length;
+            const noSpaceCount = text.replace(/\s+/g, '').length;
+
+            // Kelime Sayısı (Boşluklara göre diziyi ayırıp boş elemanları temizleme)
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCount = text.trim() === '' ? 0 : words.length;
+
+            // Cümle Sayısı (. ! ? noktalama işaretlerine göre bölme)
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            const sentenceCount = text.trim() === '' ? 0 : sentences.length;
+
+            // Tahmini Okuma Süresi (Dakikada ortalama 200 kelime okuma hızı baz alınır)
+            const readingTimeMinutes = Math.ceil(wordCount / 200);
+
+            // Ekranı Güncelle
+            document.getElementById('charCount').innerText = charCount;
+            document.getElementById('noSpaceCount').innerText = noSpaceCount;
+            document.getElementById('wordCount').innerText = wordCount;
+            document.getElementById('sentenceCount').innerText = sentenceCount;
+            document.getElementById('readingTime').innerText = `⏱️ Tahmini Okuma Süresi: ${readingTimeMinutes} dk (${(wordCount / 3.3).toFixed(0)} sn)`;
+        }
+    </script>
+
+</body>
+</html>

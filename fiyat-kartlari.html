@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staj Projesi 8 - Fiyat Kartları ve Tema Değiştirici</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --subtext-color: #64748b;
+            --border-color: #e2e8f0;
+            --primary-color: #3b82f6;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --subtext-color: #94a3b8;
+            --border-color: #334155;
+            --primary-color: #38bdf8;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+
+        /* Üst Kontrol Alanı */
+        .controls { display: flex; gap: 20px; align-items: center; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
+        .theme-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        
+        .billing-toggle { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Fiyat Kartları Alanı */
+        .pricing-container { display: flex; gap: 20px; max-width: 900px; width: 100%; flex-wrap: wrap; justify-content: center; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; flex: 1; min-width: 250px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card.featured { border: 2px solid var(--primary-color); position: relative; }
+        .badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: white; font-size: 11px; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; font-weight: bold; }
+
+        h3 { margin-top: 0; font-size: 20px; }
+        .price { font-size: 36px; font-weight: bold; margin: 15px 0; color: var(--primary-color); }
+        .price span { font-size: 14px; color: var(--subtext-color); }
+        
+        ul { list-style: none; padding: 0; margin: 20px 0; text-align: left; font-size: 14px; color: var(--subtext-color); }
+        li { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        li::before { content: "✓"; color: var(--primary-color); font-weight: bold; }
+
+        .select-btn { width: 100%; padding: 10px; border: none; background: var(--primary-color); color: white; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .select-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Koyu Tema</button>
+        
+        <div class="billing-toggle">
+            <span>Aylık</span>
+            <label class="switch">
+                <input type="checkbox" id="billingToggle" onchange="toggleBilling()">
+                <span class="slider"></span>
+            </label>
+            <span>Yıllık <small style="color: #10b981;">(%20 İndirim)</small></span>
+        </div>
+    </div>
+
+    <div class="pricing-container">
+        <!-- Başlangıç Paketi -->
+        <div class="card">
+            <h3>Başlangıç</h3>
+            <div class="price" id="price1">₺99<span>/ay</span></div>
+            <ul>
+                <li>1 Proje Hakkı</li>
+                <li>5 GB Depolama</li>
+                <li>E-posta Desteği</li>
+            </ul>
+            <button class="select-btn">Planı Seç</button>
+        </div>
+
+        <!-- Pro Paket -->
+        <div class="card featured">
+            <div class="badge">Popüler</div>
+            <h3>Profesyonel</h3>
+            <div class="price" id="price2">₺199<span>/ay</span></div>
+            <ul>
+                <li>Sınırsız Proje</li>
+                <li>50 GB Depolama</li>
+                <li>7/24 Canlı Destek</li>
+                <li>Özel Domain Bağlantısı</li>
+            </ul>
+            <button class="select-btn">Planı Seç</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DARK MODE TOGGLE ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeBtn').innerText = isDark ? '☀️ Açık Tema' : '🌙 Koyu Tema';
+        }
+
+        // --- 2. DİNAMİK FİYAT GÜNCELLEME ---
+        function toggleBilling() {
+            const isYearly = document.getElementById('billingToggle').checked;
+            const price1 = document.getElementById('price1');
+            const price2 = document.getElementById('price2');
+
+            if (isYearly) {
+                // Yıllık fiyatlar (%20 indirimli aylık hesaplama veya yıllık toplam)
+                price1.innerHTML = '₺79<span>/ay (Yıllık)</span>';
+                price2.innerHTML = '₺159<span>/ay (Yıllık)</span>';
+            } else {
+                // Aylık standart fiyatlar
+                price1.innerHTML = '₺99<span>/ay</span>';
+                price2.innerHTML = '₺199<span>/ay</span>';
+            }
+        }
+    </script>
+
+</body>
+</html>

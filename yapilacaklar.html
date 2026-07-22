@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staj Projesi 1 - To-Do List</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .todo-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { margin-top: 0; color: #333; text-align: center; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"] { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 6px; outline: none; }
+        input[type="text"]:focus { border-color: #4CAF50; }
+        button { background-color: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #45a049; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { background: #f9f9f9; padding: 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; margin-bottom: 8px; }
+        li.completed { text-decoration: line-through; color: #888; background: #e8f5e9; }
+        .delete-btn { background-color: #ff4d4d; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .delete-btn:hover { background-color: #cc0000; }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h2>Görev Listesi</h2>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Yeni görev yazın...">
+            <button onclick="addTask()">Ekle</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde kayıtlı görevleri getir
+        document.addEventListener('DOMContentLoaded', loadTasks);
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const taskText = input.value.trim();
+            if (taskText === '') return;
+
+            createTaskElement(taskText, false);
+            saveTaskToStorage(taskText, false);
+            input.value = '';
+        }
+
+        function createTaskElement(text, isCompleted) {
+            const li = document.createElement('li');
+            if (isCompleted) li.classList.add('completed');
+            
+            li.innerHTML = `
+                <span onclick="toggleTask(this)">${text}</span>
+                <button class="delete-btn" onclick="removeTask(this, '${text}')">Sil</button>
+            `;
+            document.getElementById('taskList').appendChild(li);
+        }
+
+        function toggleTask(element) {
+            const li = element.parentElement;
+            li.classList.toggle('completed');
+            updateStorage();
+        }
+
+        function removeTask(button, text) {
+            button.parentElement.remove();
+            removeTaskFromStorage(text);
+        }
+
+        function saveTaskToStorage(text, isCompleted) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.push({ text, isCompleted });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function loadTasks() {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => createTaskElement(task.text, task.isCompleted));
+        }
+
+        function updateStorage() {
+            const tasks = [];
+            document.querySelectorAll('#taskList li').forEach(li => {
+                tasks.push({
+                    text: li.querySelector('span').innerText,
+                    isCompleted: li.classList.contains('completed')
+                });
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function removeTaskFromStorage(text) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks = tasks.filter(t => t.text !== text);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+    </script>
+
+</body>
+</html>

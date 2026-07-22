@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staj Projesi 5 - Birim Dönüştürücü</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 400px; }
+        h2 { margin-top: 0; color: #1a202c; text-align: center; font-size: 20px; }
+        
+        .tab-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; cursor: pointer; font-weight: 600; color: #64748b; }
+        .tab-btn.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        
+        .converter-section { display: none; }
+        .converter-section.active { display: block; }
+
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 13px; color: #475569; margin-bottom: 5px; font-weight: 600; }
+        input[type="number"] { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; outline: none; }
+        input[type="number"]:focus { border-color: #3b82f6; }
+        
+        .equal { text-align: center; font-weight: bold; color: #94a3b8; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Birim Dönüştürücü</h2>
+
+        <div class="tab-group">
+            <button class="tab-btn active" onclick="switchTab('temp')">Sıcaklık (°C / °F)</button>
+            <button class="tab-btn" onclick="switchTab('dist')">Mesafe (KM / Mil)</button>
+        </div>
+
+        <!-- Sıcaklık Dönüştürücü -->
+        <div id="temp" class="converter-section active">
+            <div class="input-group">
+                <label for="celsius">Celsius (°C)</label>
+                <input type="number" id="celsius" placeholder="0" oninput="convertTemp('C')">
+            </div>
+            <div class="equal">↕</div>
+            <div class="input-group">
+                <label for="fahrenheit">Fahrenheit (°F)</label>
+                <input type="number" id="fahrenheit" placeholder="32" oninput="convertTemp('F')">
+            </div>
+        </div>
+
+        <!-- Mesafe Dönüştürücü -->
+        <div id="dist" class="converter-section">
+            <div class="input-group">
+                <label for="km">Kilometre (KM)</label>
+                <input type="number" id="km" placeholder="0" oninput="convertDist('KM')">
+            </div>
+            <div class="equal">↕</div>
+            <div class="input-group">
+                <label for="mile">Mil (mi)</label>
+                <input type="number" id="mile" placeholder="0" oninput="convertDist('MI')">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.converter-section').forEach(sec => sec.classList.remove('active'));
+
+            if (tabId === 'temp') {
+                event.target.classList.add('active');
+                document.getElementById('temp').classList.add('active');
+            } else {
+                event.target.classList.add('active');
+                document.getElementById('dist').classList.add('active');
+            }
+        }
+
+        // Sıcaklık Dönüştürme Mantığı
+        function convertTemp(source) {
+            const cInput = document.getElementById('celsius');
+            const fInput = document.getElementById('fahrenheit');
+
+            if (source === 'C') {
+                const c = parseFloat(cInput.value);
+                fInput.value = isNaN(c) ? '' : ((c * 9/5) + 32).toFixed(2);
+            } else {
+                const f = parseFloat(fInput.value);
+                cInput.value = isNaN(f) ? '' : ((f - 32) * 5/9).toFixed(2);
+            }
+        }
+
+        // Mesafe Dönüştürme Mantığı
+        function convertDist(source) {
+            const kmInput = document.getElementById('km');
+            const mileInput = document.getElementById('mile');
+
+            if (source === 'KM') {
+                const km = parseFloat(kmInput.value);
+                mileInput.value = isNaN(km) ? '' : (km * 0.621371).toFixed(2);
+            } else {
+                const mi = parseFloat(mileInput.value);
+                kmInput.value = isNaN(mi) ? '' : (mi / 0.621371).toFixed(2);
+            }
+        }
+    </script>
+
+</body>
+</html>

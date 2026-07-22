@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staj Projesi 6 - Şifre Gücü Ölçer</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); width: 100%; max-width: 380px; }
+        h2 { margin-top: 0; color: #38bdf8; text-align: center; font-size: 20px; }
+        
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+        input[type="password"] { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; font-size: 15px; outline: none; }
+        input[type="password"]:focus { border-color: #38bdf8; }
+
+        /* Güç Barı */
+        .strength-bar-bg { background: #334155; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+        .strength-bar { height: 100%; width: 0%; transition: all 0.3s ease; }
+        
+        .strength-text { font-size: 13px; font-weight: bold; text-align: right; margin-bottom: 15px; color: #64748b; }
+
+        /* Kriter Listesi */
+        .criteria { list-style: none; padding: 0; margin: 0; font-size: 13px; }
+        .criteria li { color: #64748b; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .criteria li.valid { color: #10b981; }
+        .criteria li.valid::before { content: "✓"; font-weight: bold; }
+        .criteria li.invalid::before { content: "×"; font-weight: bold; color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Şifre Gücü Ölçer</h2>
+        
+        <div class="input-group">
+            <label for="password">Bir şifre yazın:</label>
+            <input type="password" id="password" placeholder="Şifrenizi giriniz..." oninput="checkStrength()">
+        </div>
+
+        <div class="strength-bar-bg">
+            <div id="strengthBar" class="strength-bar"></div>
+        </div>
+        <div id="strengthText" class="strength-text">Çok Zayıf</div>
+
+        <ul class="criteria">
+            <li id="length">En az 8 karakter</li>
+            <li id="upper">Büyük harf (A-Z)</li>
+            <li id="number">Rakam (0-9)</li>
+            <li id="special">Özel karakter (!@#$%^&*)</li>
+        </ul>
+    </div>
+
+    <script>
+        function checkStrength() {
+            const pass = document.getElementById('password').value;
+            const bar = document.getElementById('strengthBar');
+            const text = document.getElementById('strengthText');
+
+            const hasLength = pass.length >= 8;
+            const hasUpper = /[A-Z]/.test(pass);
+            const hasNumber = /[0-9]/.test(pass);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+
+            // Kriter maddelerini güncelle
+            updateCriterion('length', hasLength);
+            updateCriterion('upper', hasUpper);
+            updateCriterion('number', hasNumber);
+            updateCriterion('special', hasSpecial);
+
+            // Puan hesaplama
+            let score = 0;
+            if (hasLength) score++;
+            if (hasUpper) score++;
+            if (hasNumber) score++;
+            if (hasSpecial) score++;
+
+            // Güç barı ve metni güncelle
+            if (pass.length === 0) {
+                bar.style.width = '0%';
+                text.innerText = 'Çok Zayıf';
+                text.style.color = '#64748b';
+            } else if (score <= 1) {
+                bar.style.width = '25%';
+                bar.style.backgroundColor = '#ef4444'; // Kırmızı
+                text.innerText = 'Zayıf';
+                text.style.color = '#ef4444';
+            } else if (score === 2) {
+                bar.style.width = '50%';
+                bar.style.backgroundColor = '#f59e0b'; // Turuncu
+                text.innerText = 'Orta';
+                text.style.color = '#f59e0b';
+            } else if (score === 3) {
+                bar.style.width = '75%';
+                bar.style.backgroundColor = '#3b82f6'; // Mavi
+                text.innerText = 'İyi';
+                text.style.color = '#3b82f6';
+            } else if (score === 4) {
+                bar.style.width = '100%';
+                bar.style.backgroundColor = '#10b981'; // Yeşil
+                text.innerText = 'Çok Güçlü';
+                text.style.color = '#10b981';
+            }
+        }
+
+        function updateCriterion(id, isValid) {
+            const el = document.getElementById(id);
+            if (isValid) {
+                el.className = 'valid';
+            } else {
+                el.className = 'invalid';
+            }
+        }
+    </script>
+
+</body>
+</html>
