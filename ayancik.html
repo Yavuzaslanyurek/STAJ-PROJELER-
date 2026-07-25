@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeşille Mavinin Kesiştiği Yer: Ayancık</title>
+    <style>
+        /* --- CSS SIFIRLAMA VE GENEL AYARLAR --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #1b4332; /* Orman Yeşili */
+            --secondary-color: #0d3b66; /* Deniz Laciverti */
+            --accent-color: #f4a261; /* Sıcak Ahşap Tonu */
+            --bg-light: #faf9f6; /* Soft Krem */
+            --text-dark: #2d3142;
+            --text-light: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- NAVİGASYON BARI (HEADER) --- */
+        header {
+            background-color: rgba(27, 67, 50, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- HERO (GİRİŞ) ALANI --- */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRqvIJY-WFk-vglnDvcs2l09XQUpdaQmbGWRLeKcnWlgMWpc1o5AvxxBVNi9QPjY9FDX3A2CPFAtRnxwdg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 20px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* --- ANA YAPILANDIRMA VE SEKSİYONLAR --- */
+        section {
+            padding: 80px 20px 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        /* İki sütunlu düzenler */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .text-content p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #4a4a4a;
+        }
+
+        .image-content img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .image-content img:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- KART YAPILARI --- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        /* --- TÜRKÜLER VE MANİLER ALANI --- */
+        .folk-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .folk-box {
+            background: #fdfcf7;
+            border-left: 4px solid var(--accent-color);
+            padding: 25px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .folk-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .lyrics {
+            font-style: italic;
+            white-space: pre-line;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        footer span {
+            color: var(--accent-color);
+        }
+
+        /* --- MOBİL UYUMLULUK --- */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .grid-2, .folk-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVİGASYON BARI -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">Ayancık<span>Portalı</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#tarihce">Tarihçe</a></li>
+                    <li><a href="#fabrika">Kereste Fabrikası</a></li>
+                    <li><a href="#liman">Liman & Doğa</a></li>
+                    <li><a href="#unluler">Ünlülerimiz</a></li>
+                    <li><a href="#yemekler">Yemekler</a></li>
+                    <li><a href="#kultur">Kültür (Türkü & Mani)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- GİRİŞ ALANI (Kahraman Afişi) -->
+    <div class="hero">
+        <h1>Doğanın Sanayiye Dokunduğu Yer: Ayancık</h1>
+        <p>Eşsiz ormanları, dumanı tüten tarihi fabrikası, yetiştirdiği aydınları ve dillere pelesenk lezzetleriyle geçmişten geleceğe bir köprü.</p>
+    </div>
+
+    <!-- TARİHÇE -->
+    <section id="tarihce">
+        <h2 class="section-title">Ayancık Tarihçesi</h2>
+        <div class="grid-2">
+            <div class="text-content">
+                <p>Ayancık, antik çağlardan bu yana farklı medeniyetlerin izlerini barındıran, Karadeniz sahilinde kurulu bir liman kentidir. Bölge sırasıyla Frigler, Romalılar, Bizanslılar ve Candaroğulları Beyliği egemenliğinde kalmış, Fatih Sultan Mehmet döneminde ise Osmanlı topraklarına katılmıştır.</p>
+                <p>Cumhuriyet dönemi ile birlikte zengin orman varlığı, ilçeyi Türkiye'nin ilk büyük sanayi hamlelerinden birinin merkezi haline getirmiştir.</p>
+            </div>
+            <div class="image-content">
+                <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRqvIJY-WFk-vglnDvcs2l09XQUpdaQmbGWRLeKcnWlgMWpc1o5AvxxBVNi9QPjY9FDX3A2CPFAtRnxwdg" alt="Ayancık Kıyı Şeridi ve Sahili">
+            </div>
+        </div>
+    </section>
+
+    <!-- KERESTE FABRİKASI -->
+    <section id="fabrika" style="background-color: #f2efe9;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Efsanevi Kereste Fabrikası</h2>
+            <div class="grid-2">
+                <div class="image-content">
+                    <img src="https://www.ayancikgazetesi.com/wp-content/uploads/2023/08/ayancik-kereste-fabrikasi.jpg" alt="Tarihi Ayancık Kereste Fabrikası">
+                </div>
+                <div class="text-content">
+                    <p>1926 yılında yabancı ortaklıkla kurulan **Zingal Şirketi** ve işlettiği **Ayancık Kereste Fabrikası**, Türkiye Cumhuriyeti'nin erken dönem sanayisinin lokomotiflerinden biridir.</p>
+                    <p>Fabrika, ormanlardan tomruk taşımak için kurulan dekovil hatları, teleferikler ve işçilerine sunduğu modern sinema, tenis kortları ve lojmanlarıyla dönemin çok ötesinde Avrupai bir sanayi kenti kültürü oluşturmuştur.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ORMANLAR & LİMAN -->
+    <section id="liman">
+        <h2 class="section-title">Zengin Ormanlar ve Liman</h2>
+        <div class="grid-2">
+            <div class="text-content">
+                <p>Ayancık'ın arkasında yükselen geçit vermez Küre Dağları, köknar, kayın, meşe ve çam ağaçlarından oluşan muazzam bir orman örtüsü sunar. Akgöl gibi doğa harikası göller bu zenginliği taçlandırır.</p>
+                <p>Üretilen nitelikli ahşapların ve kerestelerin gemilerle dünyaya taşınmasını sağlayan Ayancık Limanı, ticaret ve denizcilik tarihinin en önemli duraklarındandır.</p>
+            </div>
+            <div class="image-content">
+                <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTwVARvMKHB2Mka_EjHJPJpL0QyxD4p-z3oGAK4INMVqnf2VY7r8Ok0lDAKr9r-k273Q0RbjpqGz1k_-dU" alt="Ayancık Ormanları ve Akgöl">
+            </div>
+        </div>
+    </section>
+
+    <!-- AYANCIKLI ÜNLÜLER VE DEĞERLER -->
+    <section id="unluler" style="background-color: #f2efe9;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Ayancıklı Değerler</h2>
+            <div class="cards-grid">
+                <!-- Ömer Seyfettin -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Ömer Seyfettin</h3>
+                        <p class="card-subtitle">Edebiyatımızın Usta Kalemi</p>
+                        <p>Çocukluğunun bir dönemini babasının görevi nedeniyle Ayancık'ta geçiren yazar, meşhur "Ant" ve "Kaşağı" gibi öykülerinde buradaki çocukluk anılarından ve doğadan ilham almıştır.</p>
+                    </div>
+                </div>
+                <!-- LGS Birincisi -->
+                <div class="card" style="border: 2px solid var(--accent-color);">
+                    <div class="card-body">
+                        <h3 class="card-title">Ayancık LGS Şampiyonu</h3>
+                        <p class="card-subtitle">Eğitimde Gurur Tablomuz</p>
+                        <p>Bu yılki LGS (Liselere Geçiş Sistemi) sınavında tüm soruları doğru yanıtlayarak 500 tam puan alan şampiyon öğrencimiz, Ayancık'ın parlak geleceğini temsil ediyor.</p>
+                    </div>
+                </div>
+                <!-- Şefik Döğen -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Şefik Döğen</h3>
+                        <p class="card-subtitle">Tiyatro ve Sinema Sanatçısı</p>
+                        <p>1947 Ayancık doğumlu usta tiyatrocu ve sinema oyuncusu. Birçok popüler dizi ve Yeşilçam yapımında canlandırdığı karakterlerle halkın sevgisini kazanmıştır.</p>
+                    </div>
+                </div>
+                <!-- Altemur Kılıç -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Altemur Kılıç</h3>
+                        <p class="card-subtitle">Gazeteci, Yazar & Diplomat</p>
+                        <p>Atatürk'ün yaveri Kılıç Ali'nin oğlu olan Altemur Kılıç, köklü Ayancıklı aile bağlarıyla basın şeref kartı sahibi önemli bir gazeteci ve devlet insanıdır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YÖRESEL YEMEKLER (Görsel ve İsim Tutarlılığı Düzeltildi) -->
+    <section id="yemekler">
+        <h2 class="section-title">Yöresel Lezzetler</h2>
+        <div class="cards-grid">
+            <!-- Sinop Mantısı -->
+            <div class="card">
+                <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSfDWxUPspWIl-88tVa2nXo_8JsmkKy7eCb15Tn-vaWlDhgysKyQGlAtW2FUFrKYGXvPUgtDUVPutZJnUQ" alt="Cevizli ve Yoğurtlu Sinop Mantısı" class="card-img">
+                <div class="card-body">
+                    <h3 class="card-title">Sinop Mantısı</h3>
+                    <p class="card-subtitle">Hamur İşi / Ana Yemek</p>
+                    <p>İncecik açılan el hamurunun kıymalı harçla muska şeklinde kapatılmasıyla yapılan, üzerine yarısı ceviz yarısı sarımsaklı yoğurt dökülerek servis edilen eşsiz bir lezzet.</p>
+                </div>
+            </div>
+            <!-- Nokul -->
+            <div class="card">
+                <img src="https://cdn.t3pedia.org/media/uploads/2025/04/11/J4FuV6AzVnylPAFOhbJaXbV1xEz7dNTm.webp" alt="Tepside Pişmiş Sinop Nokulu" class="card-img">
+                <div class="card-body">
+                    <h3 class="card-title">Ayancık Nokulu</h3>
+                    <p class="card-subtitle">Hamur İşi / Çay Saati</p>
+                    <p>Mayalı rulo hamur içerisine bol kıyma ya da geleneksel tarife uygun olarak üzüm, ceviz ve tahin konularak fırınlanan, ağızda dağılan meşhur çörek.</p>
+                </div>
+            </div>
+            <!-- Mısır Çorbası -->
+            <div class="card">
+                <img src="https://percdn.com/f/400835/cG96WmFuTXorNjQ5Tml4c0g4OG5iTGdQYmNFPQ/images/blog/tarifler-4.webp" alt="Kasede Karadeniz Mısır Çorbası" class="card-img">
+                <div class="card-body">
+                    <h3 class="card-title">Mısır Çorbası</h3>
+                    <p class="card-subtitle">Geleneksel Çorba</p>
+                    <p>Yörede bolca yetiştirilen çorbalık kırık mısır ve barbunyanın yavaşça pişirilmesiyle yapılan, üzerine kızdırılmış tereyağı dökülerek kış aylarında sunulan şifa kaynağı çorba.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TÜRKÜLER VE MANİLER -->
+    <section id="kultur" style="background-color: #f2efe9; border-radius: 8px; margin-bottom: 60px;">
+        <h2 class="section-title">Yöresel Türküler ve Maniler</h2>
+        <div class="folk-container">
+            <div class="folk-box">
+                <h3>Meşhur Ayancık Türküsü</h3>
+                <p style="font-weight: bold; color: var(--secondary-color); margin-bottom: 10px;">Ayancık Eymeleri (Eğmeleri)</p>
+                <div class="lyrics">
+                    "Ayancık eymeleri,
+                    Beğenmem peymeleri.
+                    Söz verdik birbirimize,
+                    Gözetiriz deymeleri (gözleri).
+
+                    Ayancık'ın ufağı,
+                    Kuşatırlar kuşağı.
+                    Kız nereden geliyon,
+                    Bizim köyün uşağı..."
+                </div>
+                <p style="font-size: 13px; color: #777;">* Bu hareketli türkü, yöre insanının neşesini ve yaşam enerjisini yansıtır.</p>
+            </div>
+            <div class="folk-box">
+                <h3>Ayancık Manileri</h3>
+                <div class="lyrics">
+                    "Ayancık'ın yolunda,
+                    Gümüş bilezik kolunda.
+                    Ben yarimi ararım,
+                    Sağında ve solunda."
+
+                    ---
+
+                    "Kürelerden tomruk iner,
+                    Fabrikanın çarkı döner.
+                    Ayancık'ı görmeyenlerin,
+                    Yüreğinde hasret söner."
+                </div>
+                <p style="font-size: 13px; color: #777;">* Maniler, ilçenin ormancılık tarihini ve günlük sevdalarını günümüze taşır.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Ayancık Kültür ve Tarih Portalı. Tüm Hakları Saklıdır. | <span>Yeşil ve Mavinin Memleketi</span></p>
+    </footer>
+
+</body>
+</html>
