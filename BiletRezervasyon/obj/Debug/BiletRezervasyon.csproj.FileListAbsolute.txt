@@ -1,0 +1,10 @@
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.csproj.AssemblyReference.cache
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\bin\Debug\BiletRezervasyon.exe.config
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\bin\Debug\BiletRezervasyon.exe
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\bin\Debug\BiletRezervasyon.pdb
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.Properties.Resources.resources
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.csproj.GenerateResource.cache
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.csproj.CoreCompileInputs.cache
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.exe
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.pdb
+C:\Users\TeknoCenter\Desktop\projeler\BiletRezervasyon\obj\Debug\BiletRezervasyon.exe.config

@@ -1,0 +1,9 @@
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\bin\Debug\Otelkayıt.exe.config
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\bin\Debug\Otelkayıt.exe
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\bin\Debug\Otelkayıt.pdb
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.csproj.AssemblyReference.cache
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.Properties.Resources.resources
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.csproj.GenerateResource.cache
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.csproj.CoreCompileInputs.cache
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.exe
+C:\Users\TeknoCenter\Desktop\projeler\Otelkayıt\obj\Debug\Otelkayıt.pdb

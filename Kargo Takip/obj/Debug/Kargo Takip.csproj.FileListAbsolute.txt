@@ -1,0 +1,9 @@
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo Takip.csproj.AssemblyReference.cache
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\bin\Debug\Kargo Takip.exe.config
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\bin\Debug\Kargo Takip.exe
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\bin\Debug\Kargo Takip.pdb
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo_Takip.Properties.Resources.resources
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo Takip.csproj.GenerateResource.cache
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo Takip.csproj.CoreCompileInputs.cache
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo Takip.exe
+C:\Users\TeknoCenter\Desktop\projeler\Kargo Takip\obj\Debug\Kargo Takip.pdb
