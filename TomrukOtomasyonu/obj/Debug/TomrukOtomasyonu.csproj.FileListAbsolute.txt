@@ -1,0 +1,10 @@
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.csproj.AssemblyReference.cache
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\bin\Debug\TomrukOtomasyonu.exe.config
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\bin\Debug\TomrukOtomasyonu.exe
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\bin\Debug\TomrukOtomasyonu.pdb
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.Properties.Resources.resources
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.csproj.GenerateResource.cache
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.csproj.CoreCompileInputs.cache
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.exe
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.pdb
+C:\Users\TeknoCenter\Desktop\projeler\TomrukOtomasyonu\obj\Debug\TomrukOtomasyonu.exe.config
