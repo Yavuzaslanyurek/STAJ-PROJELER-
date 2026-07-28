@@ -1,0 +1,172 @@
+@{
+    ViewData["Title"] = "Portföy Hesaplayıcı";
+    var varliklar = ViewBag.Varliklar as IEnumerable<Yatırım.Models.FinansVarlik>;
+    var hesaplandi = ViewBag.Hesaplandi as bool? ?? false;
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <h2 class="fw-bold mb-1 text-light-theme text-center">Portföy Değer Hesaplayıcı</h2>
+        <p class="text-muted mb-4 text-center">Sahip olduğunuz finansal varlık miktarını girerek toplam Türk Lirası (₺) değerini anında öğrenin.</p>
+        
+        <div class="form-card">
+            <form asp-action="PortfoyHesapla" method="post">
+                <div class="mb-4">
+                    <label for="varlikId" class="form-label text-light-theme fw-semibold">Finansal Varlık Seçin</label>
+                    <select name="varlikId" id="varlikId" class="form-select form-select-dark" required>
+                        <option value="" disabled selected>-- Hesaplamak istediğiniz varlığı seçin --</option>
+                        @if (varliklar != null)
+                        {
+                            foreach (var item in varliklar)
+                            {
+                                // Query string'den veya controller'dan gelen varsayılan seçimi ayarla
+                                var isSelected = Context.Request.Query["varlikId"] == item.Id.ToString() || (ViewBag.SecilenVarlikAdi == item.VarlikAdi);
+                                
+                                if (isSelected)
+                                {
+                                    <option value="@item.Id" data-alis="@item.AlisFiyati" data-satis="@item.SatisFiyati" selected>
+                                        @item.VarlikAdi (@item.VarlikTuru) - Satış: @item.SatisFiyati.ToString("N2") ₺
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id" data-alis="@item.AlisFiyati" data-satis="@item.SatisFiyati">
+                                        @item.VarlikAdi (@item.VarlikTuru) - Satış: @item.SatisFiyati.ToString("N2") ₺
+                                    </option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="miktar" class="form-label text-light-theme fw-semibold">Sahip Olduğunuz Miktar (Adet / Nominal)</label>
+                    <div class="input-group">
+                        <input type="number" step="any" name="miktar" id="miktar" class="form-control form-control-dark" placeholder="Örn: 100" min="0" required value="@(ViewBag.Miktar ?? "")" />
+                        <span class="input-group-text bg-card-theme border-secondary text-muted" id="varlik-birim">Adet</span>
+                    </div>
+                    <div class="text-danger mt-1">@Html.ValidationMessage("miktar")</div>
+                </div>
+
+                <!-- Anlık JS Hesaplama Kutusu (İnteraktif Deneyim) -->
+                <div id="js-calc-box" class="p-3 mb-4 rounded-3 border border-secondary border-opacity-50 bg-black bg-opacity-20 d-none">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted fs-7">
+                            <i class="fa-solid fa-bolt text-accent me-1"></i> Anlık Tahmini Değer (Satış):
+                        </span>
+                        <span id="js-calc-result" class="fw-bold text-accent font-monospace fs-5">0.00 ₺</span>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary-custom py-2">
+                        <i class="fa-solid fa-calculator me-2"></i>Hesapla & Raporla
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary-custom py-2">
+                        <i class="fa-solid fa-arrow-left me-2"></i>Piyasa Ekranına Dön
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Hesaplama Sonucu (C# Raporu) -->
+        @if (hesaplandi)
+        {
+            <div class="card mt-4 bg-card-theme border-success border-opacity-50 shadow-lg rounded-3 animate-fade-in">
+                <div class="card-header bg-success bg-opacity-10 py-3 text-center border-bottom border-success border-opacity-25">
+                    <h5 class="fw-bold mb-0 text-up">
+                        <i class="fa-solid fa-chart-line me-2"></i>Hesaplama Sonuç Raporu
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row text-center g-3">
+                        <div class="col-6 col-sm-3 border-end border-secondary border-opacity-25">
+                            <span class="text-muted fs-7 d-block">Hesaplanan Varlık</span>
+                            <span class="fw-bold fs-5 text-light-theme">@ViewBag.SecilenVarlikAdi</span>
+                        </div>
+                        <div class="col-6 col-sm-3 border-end-sm border-secondary border-opacity-25">
+                            <span class="text-muted fs-7 d-block">Girilen Miktar</span>
+                            <span class="fw-bold fs-5 font-monospace text-light-theme">@(((decimal)ViewBag.Miktar).ToString("N2"))</span>
+                        </div>
+                        <div class="col-6 col-sm-3 border-end border-secondary border-opacity-25">
+                            <span class="text-muted fs-7 d-block">Birim Satış Fiyatı</span>
+                            <span class="fw-bold fs-5 font-monospace text-light-theme">@(((decimal)ViewBag.SatisFiyati).ToString("N2")) ₺</span>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <span class="text-muted fs-7 d-block">Birim Alış Fiyatı</span>
+                            <span class="fw-bold fs-5 font-monospace text-light-theme">@(((decimal)ViewBag.AlisFiyati).ToString("N2")) ₺</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 rounded-3 bg-success bg-opacity-5 border border-success border-opacity-25">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-light-theme">Toplam Değer (Bozum / Satış):</span>
+                            <span class="fw-bold fs-4 text-up font-monospace">@(((decimal)ViewBag.ToplamDegerSatis).ToString("N2")) ₺</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted fs-7">Toplam Değer (Alım / Alış):</span>
+                            <span class="fw-semibold text-muted font-monospace fs-6">@(((decimal)ViewBag.ToplamDegerAlis).ToString("N2")) ₺</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const $varlikSelect = $('#varlikId');
+            const $miktarInput = $('#miktar');
+            const $calcBox = $('#js-calc-box');
+            const $calcResult = $('#js-calc-result');
+            const $birimSpan = $('#varlik-birim');
+
+            function performDynamicCalculation() {
+                const selectedOption = $varlikSelect.find('option:selected');
+                const miktarValue = parseFloat($miktarInput.val());
+
+                if (selectedOption.val() && !isNaN(miktarValue) && miktarValue >= 0) {
+                    const satisFiyati = parseFloat(selectedOption.data('satis'));
+                    const total = miktarValue * satisFiyati;
+                    
+                    // Format Turkish Lira
+                    const formattedTotal = total.toLocaleString('tr-TR', { 
+                        minimumFractionDigits: 2, 
+                        maximumFractionDigits: 2 
+                    }) + " ₺";
+
+                    $calcResult.text(formattedTotal);
+                    $calcBox.removeClass('d-none');
+                } else {
+                    $calcBox.addClass('d-none');
+                }
+            }
+
+            // Update Unit text based on asset type
+            function updateUnit() {
+                const selectedOption = $varlikSelect.find('option:selected').text();
+                if (selectedOption.includes('(Hisse)')) {
+                    $birimSpan.text('Lot');
+                } else if (selectedOption.includes('(Emtia)')) {
+                    $birimSpan.text('Gram');
+                } else {
+                    $birimSpan.text('Adet');
+                }
+            }
+
+            $varlikSelect.on('change', function() {
+                updateUnit();
+                performDynamicCalculation();
+            });
+            $miktarInput.on('input', performDynamicCalculation);
+
+            // Initial trigger if values are preset
+            if ($varlikSelect.val()) {
+                updateUnit();
+                performDynamicCalculation();
+            }
+        });
+    </script>
+}
