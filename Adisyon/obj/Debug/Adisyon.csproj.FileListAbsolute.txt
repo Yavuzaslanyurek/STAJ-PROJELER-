@@ -1,0 +1,9 @@
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.csproj.AssemblyReference.cache
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\bin\Debug\Adisyon.exe.config
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\bin\Debug\Adisyon.exe
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\bin\Debug\Adisyon.pdb
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.Properties.Resources.resources
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.csproj.GenerateResource.cache
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.csproj.CoreCompileInputs.cache
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.exe
+C:\Users\TeknoCenter\Desktop\projeler\Adisyon\obj\Debug\Adisyon.pdb
